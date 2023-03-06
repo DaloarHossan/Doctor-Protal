@@ -7,7 +7,7 @@ import { AuthContext } from "../../Contexts/AuthProvider";
 const Signup = () => {
   const {register,formState: { errors },handleSubmit} = useForm();
   const [signUpError,SetSignupError] = useState('');
-  const {createUser,updateUser}=useContext(AuthContext);
+  const {createUser,updateUser,googleSignIn}=useContext(AuthContext);
   const handelSignup = (data) => {
     console.log(data);
     SetSignupError('');
@@ -27,8 +27,12 @@ const Signup = () => {
       SetSignupError('email already in use')
       }
     });
-    
+  
   };
+  const handelGoogle=()=>{
+    googleSignIn()
+}
+
   return (
     <div className="flex justify-center items-center my-16">
       <div className="flex  flex-col justify-center w-96 py-8 px-16  shadow-xl rounded-lg items-center ">
@@ -105,7 +109,7 @@ const Signup = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">Continue with google</button>
+        <button onClick={handelGoogle} className="btn btn-outline w-full">Continue with google</button>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { AuthContext } from "../../Contexts/AuthProvider";
 
 const Login = () => {
   const {register,formState: { errors },handleSubmit} = useForm();
-  const {signIn}=useContext(AuthContext);
+  const {signIn,googleSignIn}=useContext(AuthContext);
   const [loginError,setLoginError] =useState('');
   const location=useLocation();
   const navigate=useNavigate();
@@ -26,6 +26,9 @@ const Login = () => {
     }
     
   })
+};
+const handelGoogle = ()=>{
+  googleSignIn();
 }
   return (
     <div className="flex justify-center items-center my-16">
@@ -80,7 +83,7 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-		<button className="btn btn-outline w-full">Continue with google</button>
+		<button onClick={handelGoogle} className="btn btn-outline w-full">Continue with google</button>
       </div>
     </div>
   );
