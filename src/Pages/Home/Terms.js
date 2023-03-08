@@ -3,7 +3,7 @@ import treatment from '../../assets/images/treatment.png'
 
 const Terms = () => {
 	return (
-		<div className="hero mt-8 md:mt-36">
+		<div className="hero mt-8 md:mt-36 ">
   <div className="hero-content flex-col lg:flex-row">
     <img src={treatment} alt='' className="max-w-sm rounded-lg shadow-2xl" />
     <div className='lg:ml-24'>

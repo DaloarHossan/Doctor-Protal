@@ -29,6 +29,7 @@ const Login = () => {
 };
 const handelGoogle = ()=>{
   googleSignIn();
+  navigate(from,{replace: true})
 }
   return (
     <div className="flex justify-center items-center my-16">

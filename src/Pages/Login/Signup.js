@@ -1,13 +1,16 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const Signup = () => {
   const {register,formState: { errors },handleSubmit} = useForm();
   const [signUpError,SetSignupError] = useState('');
   const {createUser,updateUser,googleSignIn}=useContext(AuthContext);
+  const location=useLocation();
+  const navigate=useNavigate();
+  const from=location.state?.form?.pathname || '/';
   const handelSignup = (data) => {
     console.log(data);
     SetSignupError('');
@@ -30,7 +33,8 @@ const Signup = () => {
   
   };
   const handelGoogle=()=>{
-    googleSignIn()
+    googleSignIn();
+    navigate(from,{replace:true});
 }
 
   return (

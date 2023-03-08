@@ -31,7 +31,7 @@ const reviews=[
 
 const Reviews = () => {
   return (
-    <div className="mt-8 md:mt-24">
+    <div className="mt-8 md:mt-24 md:px-16 px-4">
       <div className="flex justify-between">
         <div>
           <h3 className="text-2xl text-secondary py-3">Testimonial</h3>
