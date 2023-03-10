@@ -1,8 +1,13 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-hot-toast";
+import { AuthContext } from "../../Contexts/AuthProvider";
 
-const BookingModal = ({ treatment, selectedDate ,setTreatment}) => {
+const BookingModal = ({ treatment, selectedDate ,setTreatment,refetch}) => {
   const { name, slots } = treatment;
+  const {user}=useContext(AuthContext)
+  const date=format(selectedDate,"PP");
+  
   const handelBookAppointment=e=>{
     e.preventDefault();
     const form=e.target;
@@ -11,14 +16,36 @@ const BookingModal = ({ treatment, selectedDate ,setTreatment}) => {
    const email=form.email.value;
    const phone=form.phone.value;
     const booking={
+      appointmentDate:date,
       treatment:treatment.name,
       PatientName:name,
       slot,
       email,
       phone
-    }
+    };
     console.log(booking);
-    setTreatment(null) ;
+    fetch('http://localhost:5000/booking',{
+      method: 'POST',
+      headers:{
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(booking)
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(data);
+      if(data.acknowledged){
+        toast.success('Booking Confirmed');
+      setTreatment(null) ;
+      refetch();
+      }
+      else{
+        setTreatment(null) ;
+        toast.error(data.message);
+      }
+
+    })
+
   }
 
   
@@ -52,6 +79,8 @@ const BookingModal = ({ treatment, selectedDate ,setTreatment}) => {
               type="text"
               name="fullName"
               placeholder="Full Name"
+              defaultValue={user?.displayName}
+              disabled
               className="input input-bordered w-full "
             />
             <input
@@ -63,7 +92,9 @@ const BookingModal = ({ treatment, selectedDate ,setTreatment}) => {
             <input
               type="email"
               name="email"
+              defaultValue={user?.email}
               placeholder="Email"
+              disabled
               className="input input-bordered w-full "
             />
             <input

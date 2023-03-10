@@ -22,6 +22,7 @@ const Signup = () => {
         displayName: data.name
       };
       updateUser(userInfo);
+      navigate('/')
       console.log(user);
     })
     .catch(err => {
